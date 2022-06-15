@@ -1,10 +1,7 @@
 public class Main {
     public static void main(String[] args) {
         Board board = new Board();
-        board.placeSquare(1, 1, 2);
-        board.placeSquare(6, 2, 1);
-        int player = board.getPlayerInSquare(3, 5);
-        System.out.println("the player is " + player);
+
     }
 
     //Method 1: Board board = new Board();

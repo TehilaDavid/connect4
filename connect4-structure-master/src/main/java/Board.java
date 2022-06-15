@@ -7,10 +7,12 @@ import javax.swing.JFrame;
 
 public class Board extends JFrame {
     private final JButton[][] squares = new JButton[7][];
-    private final JButton[][] emptySquares = new JButton[7][];
-    private int player;
+    private int gamesCounter;
+    private boolean isWon;
 
     public Board() {
+        this.gamesCounter = 1;
+
         for(int i = 0; i < Constant.BOARD_WIDTH; ++i) {
             this.squares[i] = new JButton[Constant.BOARD_WIDTH];
 
@@ -21,10 +23,24 @@ public class Board extends JFrame {
                     square.setBackground(Color.WHITE);
                     square.setFont(new Font(Constant.FONT_NAME, 1, Constant.FONT_SIZE));
 
-                    int player = 1;
 
                         square.addActionListener((e) -> {
-                            this.placeSquare(4, 3,1);
+                            int column = (Integer.parseInt(square.getText())) ;
+                            int emptyY = returnEmpty(column);
+                            if (emptyY < 7){
+                                if (gamesCounter % 2!= 0){
+                                    System.out.println("current player- " + 1);
+                                    placeSquare(column,emptyY,1);
+
+                                }else {
+                                    System.out.println("current player- " + 2);
+                                    placeSquare(column,emptyY,2);
+
+                                }
+                            }
+
+                            gamesCounter++;
+
                         });
 
 
@@ -34,7 +50,9 @@ public class Board extends JFrame {
 
                 this.squares[i][j] = square;
                 this.add(square);
+
             }
+
         }
 
         this.setLocationRelativeTo((Component)null);
@@ -45,23 +63,24 @@ public class Board extends JFrame {
         this.setVisible(true);
     }
 
+    public int returnEmpty (int column){
+        int emptySquareY = 0;
+        for (int i = 1; i < squares.length; i++) {
+            int currentSquare = getPlayerInSquare(column,i);
+            if ( currentSquare == 0){
+                return i;
+            }
+
+        }
+        return emptySquareY;
+    }
+
+
 
     public void placeSquare(int x, int y, int player) {
         this.squares[Constant.BOARD_WIDTH - y][x - 1].setBackground(player == 1 ? Color.RED : Color.YELLOW);
     }
 
-    public void checkEmptySquares (){
-        boolean isEmpty = false;
-        for (int i = 0; i < squares.length; i++) {
-
-
-        }
-    }
-
-    public boolean isWon (){
-        boolean fourInaRow = false;
-        return fourInaRow;
-    }
 
     public int getPlayerInSquare(int x, int y) {
         byte player = 0;
